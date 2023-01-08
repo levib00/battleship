@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/levib00/battleship/issues"
   },
-  "homepage": "https://github.com/levib00/battleship#readme"
+  "homepage": "https://github.com/levib00/battleship#readme",
+  "devDependencies": {
+    "jest": "^29.3.1"
+  }
 }
