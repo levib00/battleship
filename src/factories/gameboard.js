@@ -1,5 +1,5 @@
 import { Ship } from './ship-factory';
-// TODO: prevent attacking the same spot twice.
+
 const Gameboard = () => {
   let numberOfShips = 0;
   let sunkShips = 0;
