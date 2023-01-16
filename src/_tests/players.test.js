@@ -14,7 +14,7 @@ test('Initializing players also creates a gameboard as that player', () => {
 test('Players can send attacks', () => {
   const player = Players()
   const computer = Players()
-  computer.playerBoard.placeCarrier('[1,1]')
+  computer.playerBoard.placeShip('[1,1]')
 
   expect(player.sendAttacks(computer, '[1,1]')).toBe(1)
 });
@@ -23,7 +23,7 @@ test('computer player will select its own attacks', () => {
   const player = Players();
   const computer = Players()
 
-  computer.playerBoard.placeCarrier('[1,1]');
+  computer.playerBoard.placeShip('[1,1]');
 
   expect(computer.computerAttack(player)).toBe(false)
 });

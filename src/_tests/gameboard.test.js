@@ -10,14 +10,14 @@ test('test grid has all spaces', () => {
 test('has ship is assigned ship info', () => {
   const game = Gameboard()
   const board = game.gameSpace
-  game.placeCarrier('[1,1]')
+  game.placeShip('[1,1]')
   expect(board[0]).toBeTruthy();
 });
 
 test('All spaces of a horizontal ship has hasShip is assigned ship info', () => {
   const game = Gameboard()
   const board = game.gameSpace
-  game.placeCarrier('[1,1]')
+  game.placeShip('[1,1]', 5)
   expect(board[0].hasShip).toBeTruthy();
   expect(board[1].hasShip).toBeTruthy();
   expect(board[2].hasShip).toBeTruthy();
@@ -29,7 +29,7 @@ test('All spaces of a horizontal ship has hasShip is assigned ship info', () => 
 test('All spaces of a vertical ship has hasShip is assigned ship info', () => {
   const game = Gameboard()
   const board = game.gameSpace
-  game.placeCarrier('[1,1]', 1)
+  game.placeShip('[1,1]', 5, 1)
   expect(board[0].hasShip).toBeTruthy();
   expect(board[10].hasShip).toBeTruthy();
   expect(board[20].hasShip).toBeTruthy();
@@ -40,19 +40,19 @@ test('All spaces of a vertical ship has hasShip is assigned ship info', () => {
 
 test('space with ship receives hit on ship', () => {
   const game = Gameboard()
-  const carrier = game.placeCarrier('[1,1]')
+  const carrier = game.placeShip('[1,1]', 5)
   expect(game.receiveAttack('[1,1]')).toBeTruthy()
 })
 
 test('space without ship receives misses', () => {
   const game = Gameboard()
-  const carrier = game.placeCarrier('[1,1]')
+  const carrier = game.placeShip('[1,1]', 5)
   expect(game.receiveAttack('[1,2]')).toBeFalsy()
 })
 
 test('hit counter increments every time it is hit', () => {
   const game = Gameboard()
-  const carrier = game.placeCarrier('[1,1]')
+  const carrier = game.placeShip('[1,1]', 5)
   expect(game.receiveAttack('[1,1]')).toBe(1)
   expect(game.receiveAttack('[2,1]')).toBe(2)
 })
@@ -61,8 +61,8 @@ test('Can place multiple ships', () => {
   const game = Gameboard()
   
   const board = game.gameSpace
-  const carrier = game.placeCarrier('[1,1]')
-  const uBoat = game.placeCarrier('[1,2]')
+  const carrier = game.placeShip('[1,1]', 5)
+  const uBoat = game.placeShip('[1,2]', 5)
   expect(board[0].hasShip).toBeTruthy();
   expect(board[1].hasShip).toBeTruthy();
   expect(board[2].hasShip).toBeTruthy();
@@ -79,8 +79,8 @@ test('Can place multiple ships', () => {
 
 test('Each ship has its own hit counter.', () => {  
   const game = Gameboard()
-  const carrier = game.placeCarrier('[1,1]')
-  const frigate = game.placeCarrier('[1,2]')
+  const carrier = game.placeShip('[1,1]', 5)
+  const frigate = game.placeShip('[1,2]', 5)
 
   expect(game.receiveAttack('[1,1]')).toBe(1)
   expect(game.receiveAttack('[2,1]')).toBe(2)
@@ -90,8 +90,8 @@ test('Each ship has its own hit counter.', () => {
 
 test('test that ships sink', () => {
   const game = Gameboard()
-  const carrier = game.placeCarrier('[1,1]')
-  const frigate = game.placeCarrier('[1,2]')
+  const carrier = game.placeShip('[1,1]', 5)
+  const frigate = game.placeShip('[1,2]', 5)
 
   expect(game.receiveAttack('[1,1]')).toBe(1)
   expect(game.receiveAttack('[2,1]')).toBe(2)
@@ -109,8 +109,8 @@ test('test that ships sink', () => {
 
 test('Gameboard knows that all ships are sunk', () => {
   const game = Gameboard()
-  const carrier = game.placeCarrier('[1,1]')
-  const frigate = game.placeCarrier('[1,2]')
+  const carrier = game.placeShip('[1,1]', 5)
+  const frigate = game.placeShip('[1,2]', 5)
 
   game.receiveAttack('[1,1]')
   game.receiveAttack('[2,1]')
