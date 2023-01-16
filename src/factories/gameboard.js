@@ -24,9 +24,9 @@ const Gameboard = () => {
   return {
     gameSpace,
 
-    placeCarrier(placeCoordinates, xOrY = 0) {
+    placeShip(placeCoordinates, length, xOrY = 0) {
       numberOfShips += 1;
-      const carrier = Ship(5);
+      const carrier = Ship(length);
       let placement = gameSpace.findIndex((ship) => ship.coordinates === placeCoordinates);
       for (let i = 0; i < 5; i += 1) {
         gameSpace[placement].hasShip = carrier;
