@@ -14,7 +14,7 @@ test('Initializing players also creates a gameboard as that player', () => {
 test('Players can send attacks', () => {
   const player = Players()
   const computer = Players()
-  computer.playerBoard.placeShip('[1,1]')
+  computer.playerBoard.placeShip('[1,1]', 4)
 
   expect(player.sendAttacks(computer, '[1,1]')).toBe(1)
 });
