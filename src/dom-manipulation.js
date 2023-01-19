@@ -1,4 +1,8 @@
+import { gameLoop } from "./game-loop.js";
+
 const drawGrids = (makePlayers, board) => {
+  const cpu = makePlayers.cpuPlayer;
+  const human = makePlayers.playerPlayer;
   const buttonArray = [];
   for (let i = 0; i < 100; i += 1) {
     const gridSquare = document.createElement('div');
@@ -9,20 +13,15 @@ const drawGrids = (makePlayers, board) => {
     board.appendChild(gridSquare);
     const index = Array.prototype.indexOf.call(gridSquare.parentNode.children, gridSquare);
     gridSquare.addEventListener('click', () => {
-      // ! Fix later. prolly just use variables to break up length.
-      // eslint-disable-next-line max-len
-      if (makePlayers.playerPlayer.sendAttacks(makePlayers.cpuPlayer, makePlayers.playerPlayer.playerBoard.gameSpace[index].coordinates)) {
-        // ? can make this block into a function. to give it a board as parameter. the parameter can come from the id of the parent node (AKA the id of the board).
-        gridSquare.style.backgroundColor = 'red';
-      }
+      gameLoop(human, cpu, index);
     });
   }
   return { buttonArray };
 };
 
 const assignGrids = (makePlayers) => {
-  const playerBoard = document.getElementsByClassName('player')[0];
-  const cpuBoard = document.getElementsByClassName('cpu')[0];
+  const playerBoard = document.getElementById('player');
+  const cpuBoard = document.getElementById('cpu');
 
   const playerGrid = drawGrids(makePlayers, playerBoard);
   const cpuGrid = drawGrids(makePlayers, cpuBoard);
