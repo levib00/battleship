@@ -15,9 +15,10 @@ const Players = () => {
     },
 
     computerAttack(gameboard) {
-      const coordinates = () => Math.floor(Math.random() * 10) + 1;
-
-      return this.sendAttacks(gameboard, `[${coordinates()},${coordinates()}]`);
+      const makeCoordinates = () => Math.floor(Math.random() * 10) + 1;
+      const coordinates = `[${makeCoordinates()},${makeCoordinates()}]`;
+      const isHit = this.sendAttacks(gameboard, coordinates);
+      return { isHit, coordinates };
     },
   };
 };
