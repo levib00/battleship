@@ -25,7 +25,7 @@ test('computer player will select its own attacks', () => {
 
   computer.playerBoard.placeShip('[1,1]');
 
-  expect(computer.computerAttack(player)).toBe(false)
+  expect(computer.computerAttack(player).isHit).toBe(false)
 });
 
 test('Players cannot attack the same coordinates twice', () => {
