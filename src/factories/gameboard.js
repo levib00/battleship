@@ -11,7 +11,6 @@ const Gameboard = () => {
         grid.push({
           coordinates: `[${j},${i}]`,
           hasShip: false,
-          gridDOM: null,
         });
       }
     }
@@ -31,6 +30,7 @@ const Gameboard = () => {
       let placement = gameSpace.findIndex((ship) => ship.coordinates === placeCoordinates);
       for (let i = 0; i < length; i += 1) {
         gameSpace[placement].hasShip = carrier;
+        // rename to indicate it holds coordinates
         const tempArray = JSON.parse(gameSpace[placement].coordinates);
         tempArray[xOrY] += 1;
         const newPlaceCoordinates = JSON.stringify(tempArray);
