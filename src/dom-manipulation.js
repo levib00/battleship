@@ -1,22 +1,27 @@
-import { gameLoop } from "./game-loop.js";
+// eslint-disable-next-line import/extensions
+import { gameLoop, placePlayerShips } from './game.js';
 
-const drawGrids = (makePlayers, board) => {
+const drawGrids = (current, makePlayers, board) => {
+  // playerboard shuoldn't have event lsiteners
   const cpu = makePlayers.cpuPlayer;
   const human = makePlayers.playerPlayer;
-  const buttonArray = [];
   for (let i = 0; i < 100; i += 1) {
     const gridSquare = document.createElement('div');
-    buttonArray.push(gridSquare);
     gridSquare.setAttribute('class', 'grid-square clickable');
     gridSquare.style.width = '55px';
     gridSquare.style.height = '55px';
     board.appendChild(gridSquare);
     const index = Array.prototype.indexOf.call(gridSquare.parentNode.children, gridSquare);
-    gridSquare.addEventListener('click', () => {
-      gameLoop(human, cpu, index);
-    });
+    if (current === 'cpu') {
+      gridSquare.addEventListener('click', () => {
+        gameLoop(human, cpu, index);
+      });
+    } else {
+      gridSquare.addEventListener('click', () => {
+        placePlayerShips(gridSquare, human, index);
+      });
+    }
   }
-  return { buttonArray };
 };
 
 const assignGrids = (makePlayers) => {
@@ -29,4 +34,5 @@ const assignGrids = (makePlayers) => {
   return { playerGrid, cpuGrid };
 };
 
+// eslint-disable-next-line import/prefer-default-export
 export { assignGrids };
