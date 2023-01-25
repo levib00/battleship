@@ -1,5 +1,7 @@
 // eslint-disable-next-line import/extensions
-import { gameLoop, placePlayerShips } from './game.js';
+import { gameLoop, placeShips } from './game.js';
+
+const placePlayerShips = placeShips();
 
 const drawGrids = (current, makePlayers, board) => {
   // playerboard shuoldn't have event lsiteners
@@ -8,18 +10,22 @@ const drawGrids = (current, makePlayers, board) => {
   for (let i = 0; i < 100; i += 1) {
     const gridSquare = document.createElement('div');
     gridSquare.setAttribute('class', 'grid-square clickable');
-    gridSquare.style.width = '55px';
-    gridSquare.style.height = '55px';
+    gridSquare.style.width = '50px';
+    gridSquare.style.height = '50px';
     board.appendChild(gridSquare);
     const index = Array.prototype.indexOf.call(gridSquare.parentNode.children, gridSquare);
+    const cpuEvent = () => {
+      gameLoop(human, cpu, index);
+    };
+    const placeTheShips = () => {
+      placePlayerShips.placePlayerShips(gridSquare, human, index, cpu);
+    };
     if (current === 'cpu') {
-      gridSquare.addEventListener('click', () => {
-        gameLoop(human, cpu, index);
-      });
+    // TODO: isolate even listeners into their own functions so parameters can be passed,
+    // TODO: but listeners can be removed.
+      gridSquare.addEventListener('click', cpuEvent);
     } else {
-      gridSquare.addEventListener('click', () => {
-        placePlayerShips(gridSquare, human, index);
-      });
+      gridSquare.addEventListener('click', placeTheShips);
     }
   }
 };
@@ -28,8 +34,8 @@ const assignGrids = (makePlayers) => {
   const playerBoard = document.getElementById('player');
   const cpuBoard = document.getElementById('cpu');
 
-  const playerGrid = drawGrids(makePlayers, playerBoard);
-  const cpuGrid = drawGrids(makePlayers, cpuBoard);
+  const playerGrid = drawGrids('player', makePlayers, playerBoard);
+  const cpuGrid = drawGrids('cpu', makePlayers, cpuBoard);
 
   return { playerGrid, cpuGrid };
 };
