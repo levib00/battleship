@@ -8,11 +8,20 @@ const makePlayers = () => {
   return { playerPlayer, cpuPlayer };
 };
 
-const getPlayerName = () => {
-  console.log(true);
-};
-
 const placeShips = () => {
+  const rotateButton = document.getElementById('rotate');
+
+  let playerDirection = 0;
+  const rotateShip = () => {
+    if (playerDirection) {
+      playerDirection = 0;
+    } else {
+      playerDirection = 1;
+    }
+  };
+
+  rotateButton.addEventListener('click', rotateShip);
+
   const test = (coordinateX, coordinateY, direction, usedIndices, length) => {
     // TODO: refactor, rename this, arr, some key, maybe i too.
     const arr = [];
@@ -28,6 +37,7 @@ const placeShips = () => {
     const found = usedIndices.some((r) => arr.indexOf(r) >= 0);
     return found;
   };
+
   const playerGrid = document.getElementById('player').childNodes;
   const placeCpuShips = (cpuPlayer) => {
     const unavailableCpuIndices = [];
@@ -77,14 +87,14 @@ const placeShips = () => {
       }
     }
   };
+
   let i = 5;
   const usedPlayerIndices = [];
   const placePlayerShips = (gridSquare, playerPlayer, index, cpuPlayer) => {
     const { coordinates } = playerPlayer.playerBoard.gameSpace[index];
     const coordinatesArray = JSON.parse(coordinates);
-    let coordinateX = coordinatesArray[0];
+    let coordinateX = coordinatesArray[0]; // TODO: rename
     let coordinateY = coordinatesArray[1];
-    const direction = 0;
     let incrementIndex = index;
     let k = i;
     if (k < 2) {
@@ -94,20 +104,22 @@ const placeShips = () => {
     if ((!test(
       coordinateX,
       coordinateY,
-      direction,
+      playerDirection,
       usedPlayerIndices,
       k,
     ))
      && (k > 0)
-     && ((!direction && (coordinateX + k <= 10))
-     || (direction && (coordinateY + k <= 10)))) {
-      playerPlayer.playerBoard.placeShip(coordinates, i, direction);
+     && ((!playerDirection && (coordinateX + k <= 10))
+     || (playerDirection && (coordinateY + k <= 10)))) {
+      playerPlayer.playerBoard.placeShip(coordinates, k, playerDirection);
       for (let j = k; j > 0; j -= 1) {
-          if (!direction) {
-            playerGrid[incrementIndex].setAttribute('class', 'grid-square blue');
-            usedPlayerIndices.push(playerPlayer.playerBoard.gameSpace[incrementIndex].coordinates);
-            incrementIndex += 1;
-          }
+        playerGrid[incrementIndex].setAttribute('class', 'grid-square blue');
+        usedPlayerIndices.push(playerPlayer.playerBoard.gameSpace[incrementIndex].coordinates);
+        if (!playerDirection) {
+          incrementIndex += 1;
+        } else {
+          incrementIndex += 10;
+        }
       }
 
       i -= 1;
@@ -126,15 +138,10 @@ const placeShips = () => {
     }
     /*
     placeShip on the coordinates of the clicked square.
-    remove listeners from all tiles that have ships.
-    prevent overlap
-    ^^gonna need to make test() work with DI
     rename test()
-    update ship tiles to be blue.
-    get input for each ship one at a time
     */
   };
-  return { placePlayerShips, placeCpuShips };
+  return { placePlayerShips, placeCpuShips, rotateShip };
 };
 
 const gameLoop = (playerPlayer, cpuPlayer, index) => {
@@ -156,7 +163,7 @@ const gameLoop = (playerPlayer, cpuPlayer, index) => {
   if (playerAttack) {
     cpuGridSquare.style.backgroundColor = 'red';
     if (cpuPlayer.playerBoard.isAllShipsSunk()) {
-      console.log('endgame');
+      console.log('endgame'); // TODO: change to a popup bubble. with restart button?
     }
     return;
   }
@@ -172,7 +179,8 @@ const gameLoop = (playerPlayer, cpuPlayer, index) => {
     if (Loop.isHit) {
       playerSquare.style.backgroundColor = 'red';
       if (playerPlayer.playerBoard.isAllShipsSunk()) {
-        console.log('endgame');
+        console.log('endgame'); // TODO: change to a popup bubble. with restart button?
+        // TODO: probably make a function for this popup, DI the player who won.
       }
     } else if (Loop.isHit === false) {
       playerSquare.style.backgroundColor = 'grey';
