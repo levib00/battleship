@@ -19,6 +19,7 @@ header {
   padding-top: 60px;
   height: 100%;
   background-color:aliceblue;
+  text-align: center;
 }
 .flex-center {
   display: flex;
@@ -70,3 +71,9 @@ h2 {
 .blue {
   background-color: blue;
 }
+button {
+  width: 70px;
+  height: 20px;
+  grid-column: 2/3;
+}
+/* TODO: make pretty */
