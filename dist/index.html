@@ -10,10 +10,38 @@
 </head>
 <body>
   <header>BATTLESHIP</header>
+  <div class="winner-popup no-display flex-center" id="winner-popup">
+    <div id="winner-text">[Placeholder] has won the game!</div>
+    <img class="trophy-image" src="https://static.vecteezy.com/system/resources/previews/009/315/016/original/winner-trophy-in-flat-style-free-png.png" alt="">
+    <button id="reset">Play again</button>
+  </div>
   <div class="content-container">
-    display ship current ship being place here
-    <div>
-      <button id="rotate">Rotate</button>
+    <div class="flex-center info-container" id="placement-info">
+      <div>
+        <button id="rotate">Rotate</button>
+      </div>
+      <div class="ship" id="ship5">
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+      </div>
+      <div class="ship no-display" id="ship4">
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+      </div>
+      <div class="ship no-display" id="ship3">
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+      </div>
+      <div class="ship no-display" id="ship2">
+        <div class="block"></div>
+        <div class="block"></div>
+      </div>
     </div>
     <div class="flex-center">
       <div class="game">
